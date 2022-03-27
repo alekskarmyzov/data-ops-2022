@@ -1,2 +1,2 @@
 # data-ops-2022
-Repositoru for Otus DataOps course
+Repository for Otus DataOps course
