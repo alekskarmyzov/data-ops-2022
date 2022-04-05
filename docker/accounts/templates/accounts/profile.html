@@ -1,0 +1,30 @@
+{% extends "accounts/main.html" %}
+
+{% block content %}
+    <div class="mess">
+        <h2>{{ profile_detail }}</h2>
+        <p>Welcome to your profile!</p>
+        <table>
+            <tr><td>First name:</td>
+                <td>{{ user.first_name }}</td></tr>
+            <tr><td>Last name:</td>
+                <td>{{ user.last_name }}</td></tr>
+            <tr><td>E-mail:</td>
+                <td>{{ user.email }}</td></tr>
+            <tr><td>Joined:</td>
+                <td>{{ user.date_joined }}</td></tr>
+            <tr><td>Birthday date:</td>
+                <td>{% if profile_detail.date_of_birth %}
+                        {{ profile_detail.date_of_birth }}
+                    {% endif %}</td></tr>
+            <tr><td>Motto:</td>
+                <td>{{ profile_detail.info }}</td></tr>
+        </table>
+        <div class="but-wrap2">
+            <a class="e-but" href="{% url 'accounts:edit_profile' %}"><div class="button">Edit profile</div></a>
+        </div>
+        <div class="but-wrap">
+            <a class="e-but" href="{% url 'accounts:password_change' %}"><div class="button">Change password</div></a>
+        </div>
+    </div>
+{% endblock %}

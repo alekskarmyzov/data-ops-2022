@@ -1,0 +1,29 @@
+{% extends 'catpolls/index.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="image">
+        <img class="img" src="{{ catuestion.catuestion_image.url }}">
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    </div>
+
+    <div class="question">
+        <p>{{ catuestion.catuestion_text }}</p>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    </div>
+
+    <div class="voting">
+        <form action="{% url 'catpolls:vote' catuestion.id %}" method="post">
+            {% csrf_token %}
+            {% for cachoice in catuestion.cachoice_set.all %}
+                <div class="choice">
+                    <input type="radio" name="cachoice" id="cachoice{{ forloop.counter }}" value="{{ cachoice.id }}" />
+                    <label for="cachoice{{ forloop.counter }}">{{ cachoice.cachoice_text }}</label><br />
+                </div>
+            {% endfor %}
+            <div class="vote-button">
+                <button type="submit">Vote</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

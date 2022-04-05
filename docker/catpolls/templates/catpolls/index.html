@@ -1,0 +1,51 @@
+{% load static %}
+
+<html>
+<head>
+    <title>Polls</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'catpolls/css/style.css' %}">
+    <link rel="icon" type="image" href="{% static 'catpolls/images/icon1.jpg' %}">
+</head>
+<body>
+<div class="body-wrapper">
+    <header class="header">
+        <div class="header-wrapper">
+            <div class="logo">
+                <a href="/">Caturday Polls</a>
+            </div>
+
+            <div class="nav-wrapper">
+                <nav class="nav">
+                    <ul class="nav-ul">
+                        <a href="{% url 'catpolls:popular' %}"><li>Popular polls</li></a>
+                        <a href="/polls"><li>All polls</li></a>
+                        <a href="{% url 'catpolls:random' %}"><li>Random poll</li></a>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="login-wrapper">
+                {% if not user.is_authenticated %}
+                <div class="reglink"><a href="{% url 'accounts:register' %}">Registration</a></div>
+                <a class="log-but" href="{% url 'accounts:login' %}?next={{request.path}}"><div class="button">Log in</div></a>
+                {% elif user.is_authenticated %}
+                <div class="user"><a href="{% url 'accounts:get_profile' %}">{{ user.get_username }}</a></div>
+                <a class="log-but" href="{% url 'accounts:logout' %}"><div class="button">Log out</div></a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <div class="content-wrapper">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2021 Made by Chameleon Leonard ~^o.o^~</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

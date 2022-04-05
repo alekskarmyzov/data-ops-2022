@@ -1,0 +1,57 @@
+{% load static %}
+
+<html>
+<head>
+    <title>Blogs</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'catblogs/css/style.css' %}">
+    <link rel="icon" type="image" href="{% static 'catblogs/images/icon1.jpg' %}">
+</head>
+<body>
+<div class="body-wrapper">
+    <header class="header">
+        <div class="header-wrapper">
+            <div class="logo">
+                <a href="/">Caturday Blogs</a>
+            </div>
+
+            <div class="login">
+                {% if not user.is_authenticated %}
+                <div class="reglink"><a href="{% url 'accounts:register' %}">Registration</a></div>
+                <a class="log-but" href="{% url 'accounts:login' %}?next={{request.path}}"><div class="button">Log in</div></a>
+                {% elif user.is_authenticated %}
+                <div class="user"><a href="{% url 'accounts:get_profile' %}">{{ user.get_username }}</a></div>
+                <a class="log-but" href="{% url 'accounts:logout' %}"><div class="button">Log out</div></a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    <div class="content">
+        <div class="main">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div class="sidebar">
+            <nav class="nav">
+                <ul class="nav-ul">
+                    <a href="{% url 'catblogs:catpost_new' %}"><li>Create new</li></a>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'catblogs:catpost_my_posts' %}"><li>My posts</li></a>
+                    {% endif %}
+                    <a href="/blogs"><li>All publications</li></a>
+                    <a href="{% url 'catblogs:catpost_recent' %}"><li>Recent publications</li></a>
+                    <a href="{% url 'catblogs:catpost_short' %}"><li>Short stories</li></a>
+                    <a href="{% url 'catblogs:catpost_article' %}"><li>Serious articles</li></a>
+                    <a href="{% url 'catblogs:catpost_archive' %}"><li>Archive of publications</li></a>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2021 Made by Chameleon Leonard ~^o.o^~</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
