@@ -1,0 +1,15 @@
+- hosts: clickhouse_instances
+  become: yes
+
+  tasks:
+    - name: Create a data container
+      docker_container:
+        name: clickhouse-server
+        image: yandex/clickhouse-server
+        volumes:
+          - clickhouse_db_vol:/var/lib/clickhouse
+        ports:
+          - 8123:8123
+          - 9000:9000
+        ulimits:
+          - nofile:262144:262144
